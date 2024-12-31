@@ -8,39 +8,42 @@
 <body>
     <h1>Pague o FALA OU NÃO FALA (via M-Pesa)</h1>
     <form id="paymentForm">
-    <label for="telefone">Número de Telefone:</label>
-    <input type="text" id="telefone" name="telefone" placeholder="2588xxxxxx" required>
-    <button type="submit">Pagar</button>
-</form>
+        <label for="telefone">Número de Telefone:</label>
+        <input type="text" id="telefone" name="telefone" placeholder="2588xxxxxx" required>
+        <button type="submit">Pagar</button>
+    </form>
 
     <p id="status"></p>
 
     <script>
        document.getElementById('paymentForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const telefone = document.getElementById('telefone').value; // Pega o valor do campo de telefone
+           event.preventDefault();
+           const telefone = document.getElementById('telefone').value; // Pega o valor do campo de telefone
 
-    try {
-        const response = await fetch('https://fala-ou-nao-fala-26b4c5a9ceca.herokuapp.com/processar-pagamento', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ phone: telefone }), // Certifique-se de que o servidor espera 'phone'
-        });
+           try {
+               const response = await fetch('https://fala-ou-nao-fala-26b4c5a9ceca.herokuapp.com/processar-pagamento', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({ phone: telefone }), // Certifique-se de que o servidor espera 'phone'
+               });
 
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('status').innerText = `Sucesso: ${data.message}`;
-        } else {
-            const error = await response.json();
-            document.getElementById('status').innerText = `Erro: ${error.message}`;
-        }
-    } catch (error) {
-        document.getElementById('status').innerText = `Erro: ${error.message || 'Não foi possível conectar ao servidor'}`;
-    }
-});
-
+               if (response.ok) {
+                   const data = await response.json();
+                   document.getElementById('status').innerText = `Sucesso: ${data.message}`;
+                   
+                   // Redireciona para o jogo com o hash "confirmado"
+                   window.location.href = "https://jogosmoz.github.io/pagafalaounaofala/#confirmado";
+               } else {
+                   const error = await response.json();
+                   document.getElementById('status').innerText = `Erro: ${error.message}`;
+               }
+           } catch (error) {
+               document.getElementById('status').innerText = `Erro: ${error.message || 'Não foi possível conectar ao servidor'}`;
+           }
+       });
     </script>
 </body>
 </html>
+
