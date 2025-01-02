@@ -34,7 +34,7 @@
                    document.getElementById('status').innerText = `Sucesso: ${data.message}`;
                    
                    // Redireciona para o jogo com o hash "confirmado"
-                   window.location.href = "https://jogosmoz.github.io/pagafalaounaofala/#confirmado";
+                   window.location.replace("#confirmado");
                } else {
                    const error = await response.json();
                    document.getElementById('status').innerText = `Erro: ${error.message}`;
