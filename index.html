@@ -32,7 +32,9 @@
                if (response.ok) {
                    const data = await response.json();
                    document.getElementById('status').innerText = `Sucesso: ${data.message}`;
-                   
+                              // Após confirmar o pagamento
+                   window.parent.postMessage({ status: 'confirmado' }, '*');
+
                    // Redireciona para o jogo com o hash "confirmado"
                    window.location.replace("#confirmado");
                } else {
